@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Full-Screen Video Feeds</title>
+    <style>
+      body,
+      html {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 columns */
+        grid-template-rows: repeat(2, 1fr); /* 2 rows */
+        background: #000;
+        overflow: hidden; /* Avoid scrollbars */
+      }
+      #videoElement {
+        display: none; /* Only used to capture the video, not displayed */
+      }
+      canvas {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensure the canvas covers the grid area */
+        /* animation: spin 7s infinite alternate; */
+      }
+      cxanvas:nth-child(2n) {
+        transform: scaleX(-1);
+      }
+      @keyframes spin {
+        from {
+          transform: rotate(0deg);
+        }
+
+        to {
+          transform: rotate(360deg);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <video id="videoElement" autoplay></video>
+    <canvas id="canvas1"></canvas>
+    <canvas id="canvas2"></canvas>
+    <canvas id="canvas3"></canvas>
+    <canvas id="canvas4"></canvas>
+    <canvas id="canvas5"></canvas>
+    <canvas id="canvas6"></canvas>
+    <canvas id="canvas7"></canvas>
+    <canvas id="canvas8"></canvas>
+    <script>
+      const video = document.getElementById("videoElement");
+      const canvasElements = [
+        document.getElementById("canvas1"),
+        document.getElementById("canvas2"),
+        document.getElementById("canvas3"),
+        document.getElementById("canvas4"),
+        document.getElementById("canvas5"),
+        document.getElementById("canvas6"),
+        document.getElementById("canvas7"),
+        document.getElementById("canvas8"),
+      ];
+      const delays = [3000, 6000, 9000, 12000, 15000, 18000, 21000, 24000]; // Delays in milliseconds
+      // const delays = [0, 0, 3000, 3000, 6000, 6000, 9000, 9000];
+
+      function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+        }
+      }
+
+      // shuffleArray(delays); // Randomize the order of delays
+
+      const frameBuffers = new Array(8).fill(null).map(() => []);
+
+      navigator.mediaDevices
+        .getUserMedia({ video: true })
+        .then(function (stream) {
+          video.srcObject = stream;
+          drawVideoFrame();
+        })
+        .catch(function (error) {
+          console.error("Something went wrong!", error);
+        });
+
+      function drawVideoFrame() {
+        canvasElements.forEach((canvas, index) => {
+          const ctx = canvas.getContext("2d");
+          ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+          let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+          frameBuffers[index].push(imageData);
+
+          let frameRate = 30; // Assuming 30 fps
+          let framesToDelay = (delays[index] / 1000) * frameRate;
+          if (frameBuffers[index].length > framesToDelay) {
+            ctx.putImageData(frameBuffers[index].shift(), 0, 0);
+          }
+        });
+
+        requestAnimationFrame(drawVideoFrame);
+      }
+    </script>
+  </body>
+</html>

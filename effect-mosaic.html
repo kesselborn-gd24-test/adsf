@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Camera Feed with Multiple CSS Filters</title>
+    <style>
+      body,
+      html {
+        height: 100vh;
+        width: 100vw;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr); /* 4 columns */
+        grid-template-rows: repeat(2, 1fr); /* 2 rows */
+        background: #000;
+        overflow: hidden; /* Avoid scrollbars */
+      }
+      video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* Ensure the canvas covers the grid area */
+      }
+
+      .grayscale {
+        filter: grayscale(100%);
+      }
+
+      .high-saturation {
+        filter: saturate(200%);
+      }
+
+      .combined-effect {
+        filter: grayscale(100%) blur(5px);
+      }
+
+      .contrast {
+        filter: contrast(600%);
+      }
+
+      .brightness {
+        filter: brightness(150%);
+      }
+
+      .invert {
+        filter: invert(100%);
+      }
+
+      .sepia {
+        filter: sepia(100%);
+      }
+
+      .hue-rotate {
+        filter: hue-rotate(90deg);
+      }
+
+      .no-effect {
+        filter: none;
+      }
+      .drop-shadow {
+        filter: drop-shadow(16px 16px 10px grey);
+      }
+      .opacity {
+        filter: opacity(50%);
+      }
+    </style>
+  </head>
+  <body>
+    <video class="grayscale" autoplay playsinline></video>
+    <video class="combined-effect" autoplay playsinline></video>
+    <video class="contrast" autoplay playsinline></video>
+    <video class="invert" autoplay playsinline></video>
+    <video class="sepia" autoplay playsinline></video>
+    <video class="hue-rotate" autoplay playsinline></video>
+    <video class="opacity" autoplay playsinline></video>
+    <video class="high-saturation" autoplay playsinline></video>
+    <div></div>
+
+    <script>
+      const videoElements = document.querySelectorAll("video");
+
+      for (const videoElement of videoElements) {
+        if (navigator.mediaDevices.getUserMedia) {
+          navigator.mediaDevices
+            .getUserMedia({ video: true })
+            .then(function (stream) {
+              videoElement.srcObject = stream;
+            })
+            .catch(function (err) {
+              console.log("Something went wrong!", err);
+            });
+        }
+      }
+    </script>
+  </body>
+</html>
