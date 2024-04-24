@@ -20,12 +20,32 @@
             
         }
 
+        .colorsw {
+            animation: colorsw 10s infinite;
+        }
+
+        @keyframes colorsw {
+            0% {
+                filter: grayscale(0%) saturate(0%);
+            }
+            50% {
+                filter: grayscale(0%) saturate(1600%);
+            }
+            100% {
+                filter: grayscale(100%);
+            }
+        }
+
         .grayscale {
             filter: grayscale(200%);
         }
 
         .high-contrast {
             filter: contrast(500%);
+        }
+
+        .high-saturation {
+            filter: saturate(2000%) grayscale(100%);
         }
        </style>
    </head>
@@ -44,6 +64,10 @@
       <div>
         <button onclick="setFilter('grayscale')">s/w</button>
         <button onclick="setFilter('high-contrast')">high-contrast</button>
+        <button onclick="setFilter('colorsw')">color <-> sw </button>
+        <button onclick="setFilter('high-saturation')">high saturation</button>
+
+
       </div>
 
    </body>
