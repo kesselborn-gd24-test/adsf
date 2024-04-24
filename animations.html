@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <title>Animations</title>
+       <link rel="stylesheet" href="">
+   </head>
+   <style>
+    div {
+        padding: 20px;
+        margin: 10px;
+    }
+    .outer {
+        background-color: aquamarine;
+        width: 100px;
+        animation: spin 2s infinite;
+    }
+    .inner {
+        background-color: tomato;
+        animation: spin 3s infinite;
+    }
+
+    .two {
+        animation: spin 5s infinite reverse;
+    }
+    
+    .three {
+        animation: spin 7s alternate-reverse;
+    }
+
+    @keyframes spin {
+        0% {
+            transform: rotate(0deg);
+        }
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+   </style>
+           
+   <body>
+           
+    <div class="outer">
+        <div class="inner one">
+        </div>
+        <div class="inner two">
+        </div>
+        <div class="inner three"></div>
+    </div>
+   </body>
+           
+</html>
