@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+   <head>
+       <meta charset="utf-8">
+       <meta name="viewport" content="width=device-width, initial-scale=1.0">
+       <meta http-equiv="X-UA-Compatible" content="IE=edge">
+       <title>Video Fullscreen</title>
+       <link rel="stylesheet" href="">
+       <style>
+        video {
+            /*
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            */
+            
+        }
+
+        .grayscale {
+            filter: grayscale(200%);
+        }
+
+        .high-contrast {
+            filter: contrast(500%);
+        }
+       </style>
+   </head>
+           
+   <body>
+      <video class="" autoplay="true"></video>     
+      <script>
+        const video = document.querySelector('video');
+        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => video.srcObject = stream);
+
+        function setFilter(name) {
+            video.className = name;
+        }
+      </script>
+
+      <div>
+        <button onclick="setFilter('grayscale')">s/w</button>
+        <button onclick="setFilter('high-contrast')">high-contrast</button>
+      </div>
+
+   </body>
+           
+</html>
