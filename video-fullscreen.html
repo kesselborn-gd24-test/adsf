@@ -24,6 +24,23 @@
             animation: colorsw 10s infinite;
         }
 
+        div {
+            display: inline-block;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        div:hover {
+            animation: spin 5s infinite;
+        }
+
         @keyframes colorsw {
             0% {
                 filter: grayscale(0%) saturate(0%);
@@ -81,16 +98,19 @@
             document.querySelector('.normal').srcObject = stream;
         }
 
-        function setFilter(name) {
+        function setClass(name) {
             video.className = name;
         }
       </script>
 
       <div>
-        <button onclick="setFilter('grayscale')">s/w</button>
-        <button onclick="setFilter('high-contrast')">high-contrast</button>
-        <button onclick="setFilter('colorsw')">color <-> sw </button>
-        <button onclick="setFilter('high-saturation')">high saturation</button>
+        <button onclick="setClass('grayscale')">s/w</button>
+        <button onclick="setClass('high-contrast')">high-contrast</button>
+        <button onclick="setClass('colorsw')">color <-> sw </button>
+        <button onclick="setClass('high-saturation')">high saturation</button>
+
+        <button onclick="setClass('rotate')">rotate</button>
+
 
 
       </div>
