@@ -47,14 +47,39 @@
         .high-saturation {
             filter: saturate(2000%) grayscale(100%);
         }
+
+        .mirrorx {
+            transform: scaleX(-1);
+        }
+        .mirrory {
+            transform: scaleY(-1);
+        }
+        .mirrorxy {
+            transform: scaleX(-1) scaleY(-1);
+        }
        </style>
    </head>
            
    <body>
-      <video class="" autoplay="true"></video>     
+    <div>
+        <video class="grayscale mirrory mirrorx" autoplay="true"></video>
+        <video class="high-contrast mirrorxy" autoplay="true"></video>
+    </div>
+    <div>
+        <video class="high-saturation" autoplay="true"></video>     
+        <video class="normal mirrorx" autoplay="true"></video>
+    </div>
+          
       <script>
         const video = document.querySelector('video');
-        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => video.srcObject = stream);
+        navigator.mediaDevices.getUserMedia({ video: true }).then(stream => setStream(stream));
+        
+        function setStream(stream) {
+            document.querySelector('.grayscale').srcObject = stream;
+            document.querySelector('.high-contrast').srcObject = stream;
+            document.querySelector('.high-saturation').srcObject = stream;
+            document.querySelector('.normal').srcObject = stream;
+        }
 
         function setFilter(name) {
             video.className = name;
